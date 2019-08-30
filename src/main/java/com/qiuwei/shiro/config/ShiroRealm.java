@@ -37,10 +37,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
     private MenuMapper menuMapper;
 
-
-    public ShiroRealm() {
-    }
-
     @Autowired
     @SuppressWarnings("all")
     public ShiroRealm(UserMapper userMapper, RoleMapper roleMapper, MenuMapper menuMapper) {
@@ -143,9 +139,12 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        // 散列算法:这里使用MD5算法;
+
+        /**
+         * 散列算法:这里可以使用MD5算法 也可以使用SHA-256
+         */
         hashedCredentialsMatcher.setHashAlgorithmName(ShiroUtils.hashAlgorithmName);
-        // 散列的次数，比如散列两次，相当于 md5(md5(""));
+        // 散列的次数，比如散列16次，相当于 md5(md5(""));
         hashedCredentialsMatcher.setHashIterations(ShiroUtils.hashIterations);
        super.setCredentialsMatcher(hashedCredentialsMatcher);
     }
