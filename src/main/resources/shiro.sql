@@ -1,4 +1,4 @@
-# 初始化sql
+
 # Dump of table menu
 # ------------------------------------------------------------
 
@@ -23,7 +23,10 @@ LOCK TABLES `menu` WRITE;
 
 INSERT INTO `menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `create_time`, `update_time`)
 VALUES
-	(1,0,'权限菜单','menu/list','sys:user:shiro',0,'system',0,'2019-08-30 03:06:59','2019-08-30 03:07:20');
+	(1,0,'权限菜单','menu/list','menu:list',0,'system',0,'2019-08-30 03:06:59','2019-08-30 07:38:01'),
+	(2,0,'用户列表','user/list','user:list',0,'user',0,'2019-08-30 07:38:46','2019-08-30 07:38:56'),
+	(3,0,'用户详情','user/detail','user:detail',0,'user',0,'2019-08-30 07:38:52','2019-08-30 07:39:43'),
+	(4,0,'添加用户','user/add','user:add',0,'user',0,'2019-08-30 07:38:52','2019-08-30 07:42:54');
 
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -44,6 +47,15 @@ CREATE TABLE `role` (
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
 
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+
+INSERT INTO `role` (`role_id`, `role_name`, `remark`, `create_user_id`, `create_time`, `update_time`)
+VALUES
+	(1,'admin','超级管理员',1,'2019-08-30 07:41:08','2019-08-30 07:41:08');
+
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table role_menu
@@ -60,6 +72,17 @@ CREATE TABLE `role_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
+LOCK TABLES `role_menu` WRITE;
+/*!40000 ALTER TABLE `role_menu` DISABLE KEYS */;
+
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`)
+VALUES
+	(1,1,1,'2019-08-30 07:41:16','2019-08-30 07:41:16'),
+	(3,1,3,'2019-08-30 07:41:28','2019-08-30 07:41:28'),
+	(4,1,4,'2019-08-30 07:46:14','2019-08-30 07:46:14');
+
+/*!40000 ALTER TABLE `role_menu` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table user
@@ -74,6 +97,7 @@ CREATE TABLE `user` (
   `salt` varchar(20) DEFAULT NULL COMMENT '盐',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(100) DEFAULT NULL COMMENT '手机号',
+  `name` varchar(100) DEFAULT NULL COMMENT '姓名',
   `status` tinyint(4) DEFAULT NULL COMMENT '状态  0：禁用   1：正常',
   `create_user_id` bigint(20) DEFAULT NULL COMMENT '创建者ID',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -85,9 +109,9 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
-INSERT INTO `user` (`user_id`, `username`, `password`, `salt`, `email`, `mobile`, `status`, `create_user_id`, `create_time`, `update_time`)
+INSERT INTO `user` (`user_id`, `username`, `password`, `salt`, `email`, `mobile`, `name`, `status`, `create_user_id`, `create_time`, `update_time`)
 VALUES
-	(1,'admin','3743a4c09a17e6f2829febd09ca54e627810001cf255ddcae9dabd288a949c4a','123','cicada@163.com','18967835678',1,1,'2019-01-18 11:11:11','2019-01-18 11:11:11');
+	(1,'admin','3743a4c09a17e6f2829febd09ca54e627810001cf255ddcae9dabd288a949c4a','123','cicada@163.com','18967835678',NULL,1,1,'2019-01-18 11:11:11','2019-01-18 11:11:11');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -107,6 +131,15 @@ CREATE TABLE `user_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
 
+LOCK TABLES `user_role` WRITE;
+/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+
+INSERT INTO `user_role` (`id`, `user_id`, `role_id`, `create_time`, `update_time`)
+VALUES
+	(1,1,1,'2019-08-30 07:40:51','2019-08-30 07:40:51');
+
+/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
