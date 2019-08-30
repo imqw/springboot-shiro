@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CacheUser login(String username, String password) {
-        log.info("登入.....");
+        log.info("开始登入.....");
 
         // 获取Subject实例对象，用户实例
         Subject currentUser = SecurityUtils.getSubject();

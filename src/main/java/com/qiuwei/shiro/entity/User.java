@@ -2,6 +2,7 @@ package com.qiuwei.shiro.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,8 +11,9 @@ import java.util.Date;
  * @Version 1.0.0
  */
 @Data
-public class User {
+public class User implements Serializable {
 
+    private static final long serialVersionUID = -7090758275076388365L;
     private Long userId;
 
     /**

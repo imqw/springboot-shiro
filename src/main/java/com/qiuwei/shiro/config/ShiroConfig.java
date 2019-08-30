@@ -2,7 +2,6 @@ package com.qiuwei.shiro.config;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
@@ -86,39 +85,6 @@ public class ShiroConfig {
     }
 
 
-
-    /**
-     * 凭证匹配器（由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了）
-     *
-     * @return HashedCredentialsMatcher
-     */
-    @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        // 散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");
-        // 散列的次数，比如散列两次，相当于 md5(md5(""));
-        hashedCredentialsMatcher.setHashIterations(2);
-        return hashedCredentialsMatcher;
-    }
-
-
-
-    /**
-     * 将自己的验证方式加入容器
-     * create by: leigq
-     * create time: 2019/7/3 14:30
-     *
-     * @return MyShiroRealm
-     */
-    @Bean
-    public ShiroRealm shiroRealm() {
-        ShiroRealm shiroRealm = new ShiroRealm();
-        shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
-        return shiroRealm;
-    }
-
-
     /**
      * RedisSessionDAO shiro sessionDao层的实现 通过redis, 使用的是shiro-redis开源插件
      *
@@ -189,9 +155,9 @@ public class ShiroConfig {
      * @return SecurityManager
      */
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(ShiroRealm shiroRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(shiroRealm());
+        securityManager.setRealm(shiroRealm);
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager());
         // 自定义缓存实现 使用redis
