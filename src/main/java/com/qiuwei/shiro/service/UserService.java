@@ -1,6 +1,6 @@
 package com.qiuwei.shiro.service;
 
-import com.qiuwei.shiro.entity.User;
+import com.qiuwei.shiro.util.CacheUser;
 
 /**
  * @Author: qiuwei@19pay.com.cn
@@ -8,5 +8,20 @@ import com.qiuwei.shiro.entity.User;
  */
 public interface UserService {
 
-    User findByUsername(String username);
+    /**
+     * 登入
+     * @param username
+     * @param password
+     * @return
+     */
+    CacheUser login(String username, String password);
+
+
+    /**
+     * 登出
+     */
+    void logout();
+
+
+
 }

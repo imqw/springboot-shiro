@@ -65,6 +65,9 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new UnknownAccountException("用户不存在");
         }
 
+        //TODO 是否为超级管理员   是  全部菜单权限
+
+
         /**
          * 查询用户角色
          */
