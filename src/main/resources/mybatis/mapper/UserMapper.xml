@@ -27,6 +27,15 @@
         where user_id = #{userId}
     </select>
 
+
+    <select id="findByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where username = #{username}
+    </select>
+
+
     <delete id="delete" parameterType="java.lang.Long" >
         delete from user
         where user_id = #{userId}
