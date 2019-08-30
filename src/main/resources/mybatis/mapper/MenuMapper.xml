@@ -135,5 +135,24 @@
         where menu_id = #{menuId}
     </update>
 
+
+    <select id="listMenuByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+
+        select
+        m.menu_id,
+        m.parent_id,
+        m.name,
+        m.url,
+        m.perms,
+        m.type,
+        m.icon,
+        m.order_num,
+        m.create_time,
+        m.update_time
+        from menu m ,role_menu rm
+        where m.`menu_id`=rm.`menu_id`
+        and rm.role_id=#{roleId}
+    </select>
+
  
 </mapper>

@@ -4,6 +4,8 @@ package com.qiuwei.shiro.mapper;
 import com.qiuwei.shiro.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface MenuMapper {
 
@@ -13,6 +15,8 @@ public interface MenuMapper {
 
     Menu findById(Long menuId);
 
-
     int updateByParams(Menu menu);
+
+    List<Menu> listMenuByRoleId(Long roleId);
+
 }

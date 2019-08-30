@@ -1,98 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.qiuwei.shiro.mapper.RoleMapper" >
+<mapper namespace="com.qiuwei.shiro.mapper.RoleMapper">
 
-    <resultMap id="BaseResultMap" type="com.qiuwei.shiro.entity.Role" >
-        <id column="role_id" property="roleId"  />
-        <result column="role_name" property="roleName"  />
-        <result column="remark" property="remark"  />
-        <result column="create_user_id" property="createUserId"  />
-        <result column="create_time" property="createTime"  />
-        <result column="update_time" property="updateTime"  />
+    <resultMap id="BaseResultMap" type="com.qiuwei.shiro.entity.Role">
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="remark" property="remark"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
         role_id, role_name, remark, create_user_id, create_time, update_time
     </sql>
 
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-        select 
-        <include refid="Base_Column_List" />
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
         from role
         where role_id = #{roleId}
     </select>
 
-    <delete id="delete" parameterType="java.lang.Long" >
+    <delete id="delete" parameterType="java.lang.Long">
         delete from role
         where role_id = #{roleId}
     </delete>
 
 
-    <insert id="insert" parameterType="com.qiuwei.shiro.entity.Role" >
+    <insert id="insert" parameterType="com.qiuwei.shiro.entity.Role">
         insert into role
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="roleId != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
                 role_id,
             </if>
-            <if test="roleName != null" >
+            <if test="roleName != null">
                 role_name,
             </if>
-            <if test="remark != null" >
+            <if test="remark != null">
                 remark,
             </if>
-            <if test="createUserId != null" >
+            <if test="createUserId != null">
                 create_user_id,
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time,
             </if>
-            <if test="updateTime != null" >
+            <if test="updateTime != null">
                 update_time,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="roleId != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
                 #{roleId},
             </if>
-            <if test="roleName != null" >
+            <if test="roleName != null">
                 #{roleName},
             </if>
-            <if test="remark != null" >
+            <if test="remark != null">
                 #{remark},
             </if>
-            <if test="createUserId != null" >
+            <if test="createUserId != null">
                 #{createUserId},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 #{createTime},
             </if>
-            <if test="updateTime != null" >
+            <if test="updateTime != null">
                 #{updateTime},
             </if>
         </trim>
     </insert>
 
-    <update id="updateByParams" parameterType="com.qiuwei.shiro.entity.Role" >
+    <update id="updateByParams" parameterType="com.qiuwei.shiro.entity.Role">
         update role
-        <set >
-            <if test="roleName != null" >
+        <set>
+            <if test="roleName != null">
                 role_name = #{roleName},
             </if>
-            <if test="remark != null" >
+            <if test="remark != null">
                 remark = #{remark},
             </if>
-            <if test="createUserId != null" >
+            <if test="createUserId != null">
                 create_user_id = #{createUserId},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time = #{createTime},
             </if>
-            <if test="updateTime != null" >
+            <if test="updateTime != null">
                 update_time = #{updateTime},
             </if>
         </set>
         where role_id = #{roleId}
     </update>
+
+
+    <select id="listRoleByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        r.role_id,
+        r.role_name,
+        r.remark,
+        r.create_user_id,
+        r.create_time,
+        r.update_time
+        from role r,user_role ur
+        where r.`role_id`=ur.`role_id`
+        and ur.user_id=#{userId}
+    </select>
 
 
 </mapper>
